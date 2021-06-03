@@ -34,6 +34,7 @@ public class Main3 {
         Thread thread = new Thread(new LongComputationTask(new BigInteger("200000"), new BigInteger("100000000")));
 
         thread.setDaemon(true);//if we do not want to break execution of thread when interrupt it, we setDaemon(true)
+//then when main thread finishes 
         thread.start();
         Thread.sleep(100);
         thread.interrupt();

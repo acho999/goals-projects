@@ -42,17 +42,20 @@ public class Main {
         }
 
         for (Thread thread : threads) {
-            thread.setDaemon(true);
+            thread.setDaemon(true);//set this here in order to stop program if thread wait 2000 millsec as below
+            //also can be achieved with thread.interrupt()
             thread.start();
         }
 
         for (Thread thread : threads) {
-            thread.join(2000);
+            thread.join(2000);//here we stop main thread and wait for all threads to fisnish
+            //also we add 2000 millsec to tell to main thread how long to wait calculations of other threads
         }
 
         for (int i = 0; i < inputNumbers.size(); i++) {
             FactorialThread factorialThread = threads.get(i);
-            if (factorialThread.isFinished()) {
+            if (factorialThread.isFinished()) {//befeore we add thread.join above here we have race
+                //condition because after thread.start here main thread check started threads
                 System.out.println("Factorial of " + inputNumbers.get(i) + " is " + factorialThread.getResult());
             } else {
                 System.out.println("The calculation for " + inputNumbers.get(i) + " is still in progress");
