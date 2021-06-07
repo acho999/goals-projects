@@ -101,7 +101,6 @@ function Hooks(props){// components from function type can have state can have p
 
             <div>{inputs.name}</div>
             {inputs.age!==''?<div>{inputs.age}</div>:<p>Enter age!!!</p>}{/*here is conditional statement */}
-            <div value={submitHandler.age}></div>
         </Card>
     )
 }

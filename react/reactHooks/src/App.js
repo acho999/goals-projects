@@ -43,7 +43,7 @@ function App(){
     });//here we will add dynamically another names to older state name
 
     setArray((prevState)=>{
-
+//...spreadOperattor can be used on arrays and on objects
       return [passedData.name, ...prevState];
 
     })//here we add element dynamically 
@@ -56,11 +56,9 @@ function App(){
     <div className='App'>
       <h1>{random}</h1>
       <Hooks onSubmitHandler = {handlerFunc} title={'0'*1}/> {/*here we create own listener variable onSubmitHandler
-      to which we will add a function in curly brackets which will be deklared here in parent component and it will 
+      to which we will add a function in curly brackets which will be declared here in parent component and it will 
       receive parameter which will be passed from inside Hooks component. By this way we can send information from
       child component to parent component*/}
-      <br/>
-      <br/>
       <br/>
       <br/>
       <AnotherCard title={name}/>{/*here we take name from parent and parent take name from Hooks that way
@@ -68,12 +66,8 @@ function App(){
       from child to parent and from parent to child and parent have to have connection with this two components
       as it returns thees two child components it can not be from child to child without parent*/}
       <br/>
-      <br/>
-      <br/>
       {array.map((x,index)=><AnotherCard title={x} key={index}/>)} {/*here we have list of same component the key 
       have to be unique for example we have to put some id of object*/}
-      <br/>
-      <br/>
       <br/>
       <br/>
       <AnotherCard title={anotherName}/>
