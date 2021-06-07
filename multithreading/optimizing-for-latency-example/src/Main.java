@@ -43,8 +43,9 @@ public class Main {
         BufferedImage resultImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         long startTime = System.currentTimeMillis();
-        //recolorSingleThreaded(originalImage, resultImage);
-        int numberOfThreads = 1;
+        //recolorSingleThreaded(originalImage, resultImage); this is for single thread
+        int numberOfThreads = 1;//here may add 2,3,4 untill cores of processor if we add more threads than cores
+        //of the processor it becames contraproductive because cores start to share resources between
         recolorMultithreaded(originalImage, resultImage, numberOfThreads);
         long endTime = System.currentTimeMillis();
 
