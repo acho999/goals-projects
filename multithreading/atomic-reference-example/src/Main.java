@@ -35,7 +35,7 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        //StandardStack<Integer> stack = new StandardStack<>();
+        //StandardStack<Integer> stack = new StandardStack<>();here we perferm 3 times less operations if use standartstack
         LockFreeStack<Integer> stack = new LockFreeStack<>();
         Random random = new Random();
 
@@ -150,7 +150,7 @@ public class Main {
 
     private static class StackNode<T> {
         public T value;
-        public StackNode<T> next;
+        public StackNode<T> next;//this keep reference to the next element in linkedlist
 
         public StackNode(T value) {
             this.value = value;

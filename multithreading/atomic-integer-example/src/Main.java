@@ -78,7 +78,7 @@ public class Main {
     private static class InventoryCounter {
         private AtomicInteger items = new AtomicInteger(0);
 
-        public void increment() {
+        public void increment() {//here we delete synchronized keyword because of AtomicInteger
             items.incrementAndGet();
         }
 
