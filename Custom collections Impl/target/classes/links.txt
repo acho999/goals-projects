@@ -1,0 +1,1 @@
+https://www.javamadesoeasy.com/2015/02/arraylist-custom-implementation.html - link to custom implementation of ArrayList
