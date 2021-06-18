@@ -22,7 +22,7 @@ public class CustomHashMapMain {
         Set<CustomHashMap.Entry<Integer, Integer>> entries = map.entrySet();
 
         Optional<CustomHashMap.Entry<Integer, Integer>> ent = entries.stream().findFirst();
-        
+
         System.out.println(ent.get().getKey() + " " + ent.get().getValue());
 
         System.out.println(map.toString());
