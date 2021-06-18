@@ -16,10 +16,10 @@ function App() {
   };
 
   return (
-    <div>
+    <React.Fragment>{/*here we wrap other components or html in our FRAGMENT that is the name of empty tag wrapper can be empty or React.Fragment or just <></>*/}
       <AddUser onAddUser={addUserHandler} />
       <UsersList users={usersList} />
-    </div>
+    </React.Fragment>
   );
 }
 
