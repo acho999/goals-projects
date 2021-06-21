@@ -1,2 +1,3 @@
 https://www.javamadesoeasy.com/2015/02/arraylist-custom-implementation.html - link to custom implementation of ArrayList
 https://www.javamadesoeasy.com/2015/02/hashmap-custom-implementation.html - link to custom implementation of HashMap
+https://www.javamadesoeasy.com/2015/01/stacks-with-generics.html - link to custom implementation of Stack
