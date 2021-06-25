@@ -6,7 +6,9 @@ import MainHeader from './components/MainHeader/MainHeader';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(()=>{
+  useEffect(()=>{//here we use useEffect to rerender and relog in user
+    //useEffect is used for lifecycle hooks when we have to rerender something
+    // it is triggered when we have some change
 
     const isUserLoggedIn = localStorage.getItem('isLoggedIn');
   if(isUserLoggedIn === '1'){
@@ -18,7 +20,7 @@ function App() {
   const loginHandler = (email, password) => {
     // We should of course check email and password
     // But it's just a dummy/ demo anyways
-    localStorage.setItem('isLoggedIn','1');//here we set login to 1 === true
+    localStorage.setItem('isLoggedIn','1');//here we set login to 1 === true in local storage
     setIsLoggedIn(true);
   };
 

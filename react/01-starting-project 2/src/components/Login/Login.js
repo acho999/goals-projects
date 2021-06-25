@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -11,12 +11,25 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  useEffect(() =>{//this useEffect will be triggered when component is rendered and will be executed once
+    //but when we want to rerender after some changes and in order for they to be visible we have to pass 
+    //parameters in array argument.
+    let identifier = setTimeout(() =>{
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    },500)//this function inside will be executed after 500 milliseconds
+    
+      return () =>{ clearTimeout(identifier);} //if we put this here that will clear all subscriptions to any event this just 
+      //clear up setInterval function for example when component is unmounting
+  },[setFormIsValid,enteredEmail,enteredPassword])//here we pass the parameters or dependencies which if have been changed
+  //useEffect will be executed only then we can remove setFormIsValid because it is function that changes formIsValid variable and
+  //this function do not change it self and that is why we can omitt them
+
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
 
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
+   
   };
 
   const passwordChangeHandler = (event) => {
