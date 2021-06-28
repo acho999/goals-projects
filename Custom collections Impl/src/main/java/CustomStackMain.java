@@ -1,4 +1,4 @@
-import collections.CustomStack;
+import collections.impl.CustomStack;
 
 public class CustomStackMain {
 

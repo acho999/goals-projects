@@ -1,4 +1,4 @@
-package collections;
+package collections.impl;
 
 public class CustomStack<T> {
 

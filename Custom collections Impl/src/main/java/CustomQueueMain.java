@@ -1,4 +1,4 @@
-import collections.CustomQueue;
+import collections.impl.CustomQueue;
 
 public class CustomQueueMain {
 

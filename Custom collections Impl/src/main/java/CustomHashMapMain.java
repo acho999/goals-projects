@@ -1,4 +1,4 @@
-import collections.CustomHashMap;
+import collections.impl.CustomHashMap;
 
 import java.util.Optional;
 import java.util.Set;
