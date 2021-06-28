@@ -2,7 +2,7 @@ package collections.api;
 
 import java.util.Arrays;
 
-public interface IList<T extends Comparable<T>> extends Iterable<T>{
+public interface IList<T> extends Iterable<T>{
 
     //void increseCapacity();
     void add(T element);

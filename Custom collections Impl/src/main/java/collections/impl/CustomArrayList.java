@@ -13,7 +13,8 @@ public class CustomArrayList<T extends Comparable<T>> implements IList<T> {
     private int length;
 
     public CustomArrayList() {
-        this.elements = (T[]) new Comparable[INITIAL_CAPACITY];
+        this.elements = (T[]) new Comparable[INITIAL_CAPACITY];//here we instantiate comparable and cast it to T
+        //the idea is that T have to extend Comparable<T>
         this.length = INITIAL_CAPACITY;
         this.size = 0;
     }
