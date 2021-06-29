@@ -1,7 +1,6 @@
 package collections.impl;
 
 import collections.api.IList;
-
 import java.util.Arrays;
 import java.util.Iterator;
 
