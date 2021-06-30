@@ -19,7 +19,7 @@ public class PersonJbdcDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	class PersonRowMapper implements RowMapper<Person>{
+	class PersonRowMapper implements RowMapper<Person>{//here we implements custom row mapper
 		@Override
 		public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Person person = new Person();
@@ -33,12 +33,12 @@ public class PersonJbdcDao {
 	}
 	
 	public List<Person> findAll() {
-		return jdbcTemplate.query("select * from person", new PersonRowMapper());
+		return jdbcTemplate.query("select * from person", new PersonRowMapper());//here we have not parameters
 	}
 
-	public Person findById(int id) {
+	public Person findById(int id) {//here in query id will be passed to ? place
 		return jdbcTemplate.queryForObject("select * from person where id=?", new Object[] { id },
-				new BeanPropertyRowMapper<Person>(Person.class));
+				new BeanPropertyRowMapper<Person>(Person.class));//BeanPropertyRowMapper<Person> is default mapper
 	}
 
 	public int deleteById(int id) {
@@ -48,13 +48,13 @@ public class PersonJbdcDao {
 	public int insert(Person person) {
 		return jdbcTemplate.update("insert into person (id, name, location, birth_date) " + "values(?,  ?, ?, ?)",
 				new Object[] { person.getId(), person.getName(), person.getLocation(),
-						new Timestamp(person.getBirthDate().getTime()) });
+						new Timestamp(person.getBirthDate().getTime()) });//here we insert Person
 	}
 
 	public int update(Person person) {
 		return jdbcTemplate.update("update person " + " set name = ?, location = ?, birth_date = ? " + " where id = ?",
 				new Object[] { person.getName(), person.getLocation(), new Timestamp(person.getBirthDate().getTime()),
-						person.getId() });
+						person.getId() });//here we updae Person data
 	}
 
 }

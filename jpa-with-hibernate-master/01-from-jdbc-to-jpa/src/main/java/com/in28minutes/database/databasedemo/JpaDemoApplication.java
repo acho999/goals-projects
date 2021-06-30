@@ -11,8 +11,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.in28minutes.database.databasedemo.entity.Person;
 import com.in28minutes.database.databasedemo.jpa.PersonJpaRepository;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages= {"com.in28minutes.database.databasedemo.*"})
+@EntityScan(basePackages = {"com.in28minutes.database.databasedemo.entity"})
+@EnableJpaRepositories(basePackages = {"com.in28minutes.database.databasedemo.jpa"})
 public class JpaDemoApplication implements CommandLineRunner {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

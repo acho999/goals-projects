@@ -17,10 +17,11 @@ public class PersonJpaRepository {
 
 	// connect to the database
 	@PersistenceContext
-	EntityManager entityManager;
+	EntityManager entityManager;//here we have access to context i.e database connection
 
 	public List<Person> findAll() {
 		TypedQuery<Person> namedQuery = entityManager.createNamedQuery("find_all_persons", Person.class);
+		//this is using  JPQL named query from Person definition
 		return namedQuery.getResultList();
 	}
 
@@ -30,7 +31,7 @@ public class PersonJpaRepository {
 
 	public Person update(Person person) {
 		return entityManager.merge(person);
-	}
+	}//merge updates the Person data changes
 
 	public Person insert(Person person) {
 		return entityManager.merge(person);
