@@ -40,7 +40,7 @@ public class CourseRepository {
         this.manager.flush();
         //if we do not want to track changes which we will made below with setName, we can do
         manager.detach(course1);//that way course1 is detached from context and it is not tracked
-        //and code below will not have influence
+        //and code below will not have influence the same thing can be achieved with manager.clear().
         course1.setName("Another");
         this.manager.refresh(course1);//with this method changes we made above will not be saved and
         //that way we revert the changes and name will be Something1 not Another

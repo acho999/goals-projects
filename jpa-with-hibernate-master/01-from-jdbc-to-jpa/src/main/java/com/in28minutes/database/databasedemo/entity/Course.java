@@ -1,22 +1,30 @@
 package com.in28minutes.database.databasedemo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import com.in28minutes.database.databasedemo.entity.Review;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "cources")
 public class Course {
 
-
-
-
     @Id
     @GeneratedValue
-    public Long id;
+    private Long id;
 
-    public String name;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
+
+    @Column(nullable = false,name = "name")
+    private String name;
 
     public Course(){}
 

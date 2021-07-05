@@ -5,10 +5,15 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name="find_all_persons", query="select p from Person p")//this is JPQL
+@NamedQueries(value = {
+	@NamedQuery(name="find_AllPersons",query = "select p from Person p"),
+	@NamedQuery(name="find_AllPersons",query = "select p from Person p"),//here with @NamedQueries we can add many
+})
+@NamedQuery(name="find_all_persons", query="select p from Person p")//that way we can add query ad use it at service or repository
 public class Person {
 
 	@Id
