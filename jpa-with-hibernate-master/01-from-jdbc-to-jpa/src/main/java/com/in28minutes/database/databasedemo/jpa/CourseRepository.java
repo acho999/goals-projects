@@ -1,7 +1,12 @@
 package com.in28minutes.database.databasedemo.jpa;
 
 import com.in28minutes.database.databasedemo.entity.Course;
+import com.in28minutes.database.databasedemo.entity.Review;
+import com.in28minutes.database.databasedemo.entity.Student;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -45,6 +50,60 @@ public class CourseRepository {
         this.manager.refresh(course1);//with this method changes we made above will not be saved and
         //that way we revert the changes and name will be Something1 not Another
         this.manager.flush();
+    }
+
+    public void addReviewsForCourse(){
+
+         Course course = this.manager.find(Course.class,5L);
+
+        Review review = new Review("Java");
+
+        List<Review> reviews = new ArrayList<>();
+
+        reviews.add(review);
+
+        course.setReviews(reviews);//here we set reviews for the course
+
+        review.setCourse(course);//here we set cource for particular review
+
+        this.manager.persist(review);//here we add review in database, cource is retrieved from database and it is tracked
+        //that is why changes are made immediately when we set reviews for the course
+
+    }
+
+    @Transactional//we make this because of fetching strategy needs persistance context
+    public List<Review> getReviewsForCource(Long courseId){
+
+        Course course = this.manager.find(Course.class, courseId);
+
+        return course.getReviews();//this operation needs context
+
+    }
+
+    @Transactional//we make this because of fetching strategy needs persistance context
+    public Course getCourseForReview(Long reviewId){
+
+        Review review = this.manager.find(Review.class, reviewId);
+
+        return review.getCourse();//this operation needs context
+
+    }
+
+    @Transactional//we make this because of fetching strategy needs persistance context
+    public List<Student> getStudentsForCourse(Long courseId){
+
+        Course course = this.manager.find(Course.class, courseId);
+
+        return course.getStudents();//this operation needs context
+
+    }
+    @Transactional//we make this because of fetching strategy needs persistance context
+    public List<Course> getCoursesForStudent(Long studentId){
+
+        Student student = this.manager.find(Student.class, studentId);
+
+        return student.getCourses();//this operation needs context
+
     }
 
 }

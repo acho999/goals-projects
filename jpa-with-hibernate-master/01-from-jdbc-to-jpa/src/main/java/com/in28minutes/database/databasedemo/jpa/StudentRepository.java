@@ -1,9 +1,13 @@
 package com.in28minutes.database.databasedemo.jpa;
 
+import com.in28minutes.database.databasedemo.entity.Course;
 import com.in28minutes.database.databasedemo.entity.Passport;
 import com.in28minutes.database.databasedemo.entity.Student;
 import com.in28minutes.database.databasedemo.entity.Student;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,6 +42,26 @@ public class StudentRepository {
         //the database will not being changed
         System.out.println(student.getPassport().getNumber());
         return student;
+    }
+
+    @Transactional//we put this here because of need of context
+    public void insertStudentAndCourse(){
+
+        Student student = new Student();
+        Course course = new Course();
+        this.manager.persist(student);
+        this.manager.persist(course);//here we firstly persist entities
+
+        List<Course> courses = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
+        courses.add(course);
+        students.add(student);
+
+        student.setCourses(courses);//here we establish relationship between entities
+        course.setStudents(students);
+
+        //here we have to persist student again because it is owner of the relationship
+        this.manager.persist(student);
     }
 
     public void playWithWntityManager(){
