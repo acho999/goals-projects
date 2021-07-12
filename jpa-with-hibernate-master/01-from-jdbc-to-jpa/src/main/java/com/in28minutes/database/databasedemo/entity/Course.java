@@ -4,21 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import com.in28minutes.database.databasedemo.entity.Review;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "courses")
+@Cacheable//this enables second level cashing for this entity
 public class Course {
 
     @Id

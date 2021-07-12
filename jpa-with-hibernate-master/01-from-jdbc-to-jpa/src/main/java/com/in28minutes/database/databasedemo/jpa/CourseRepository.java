@@ -4,6 +4,7 @@ import com.in28minutes.database.databasedemo.entity.Course;
 import com.in28minutes.database.databasedemo.entity.Review;
 import com.in28minutes.database.databasedemo.entity.Student;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +72,11 @@ public class CourseRepository {
 
     }
 
-    @Transactional//we make this because of fetching strategy needs persistance context
+    @Transactional//we make this because of fetching strategy needs persistance context, transactional also
+    //enables first level cash i.e in one transaction if we have two quires which are same when first is executed
+    //it will be cashed and secon will not go to the database, first level cash is autoconfigured
+    @org.springframework.transaction.annotation.Transactional(isolation = Isolation.SERIALIZABLE)//this is for
+    //managing multiple transactions and in it we can choose isolation level
     public List<Review> getReviewsForCource(Long courseId){
 
         Course course = this.manager.find(Course.class, courseId);
