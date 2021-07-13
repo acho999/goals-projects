@@ -2,6 +2,7 @@ package com.in28minutes.database.databasedemo.jpa;
 
 import com.in28minutes.database.databasedemo.entity.Course;
 import com.in28minutes.database.databasedemo.entity.Review;
+import com.in28minutes.database.databasedemo.entity.ReviewRating;
 import com.in28minutes.database.databasedemo.entity.Student;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
@@ -57,7 +58,7 @@ public class CourseRepository {
 
          Course course = this.manager.find(Course.class,5L);
 
-        Review review = new Review("Java");
+        Review review = new Review(ReviewRating.FOUR,"Java");
 
         List<Review> reviews = new ArrayList<>();
 

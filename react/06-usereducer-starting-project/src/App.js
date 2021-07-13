@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
+import AuthContext from './context/auth-context'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);//we use this state here because it will be used in all app
@@ -28,13 +29,19 @@ function App() {
   };
 
   return (
-    <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
-      <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
-      </main>
-    </React.Fragment>
+       //<React.Fragment> here we comment this tag because we have wrapper component already */}
+      <AuthContext.Provider value={{isLoggedIn:isLoggedIn}}>{/*here we wrap component which have to access isLogIn property from AuthContext we use .Provider
+      to tell to react AuthContext is used like component event it is not;     also we added object value which is body from AuthContext
+      the idea is to change it here; that way we can use info from App component. When value is changed inside this info will be provided 
+      to all listening coponents down to chain*/}
+       {/* <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />  here we comment this*/}
+       <MainHeader onLogout={logoutHandler} />{/*here we ramove some attributes*/}
+        <main>
+          {!isLoggedIn && <Login onLogin={loginHandler} />}
+          {isLoggedIn && <Home onLogout={logoutHandler} />}
+        </main>
+      </AuthContext.Provider>
+       //</React.Fragment>
   );
 }
 

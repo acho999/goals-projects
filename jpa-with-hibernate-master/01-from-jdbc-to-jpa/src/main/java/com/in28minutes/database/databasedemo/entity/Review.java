@@ -1,6 +1,8 @@
 package com.in28minutes.database.databasedemo.entity;
 
 import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,6 +14,11 @@ public class Review {
     @GeneratedValue
     private Long Id;
 
+    @Enumerated(EnumType.STRING)//here we mapp enumeration and it is good to
+    //add EnumType.STRING but not EnumType.ORDINAL and when we insert values we will insert strings
+    //because if we use ordinal if we add a new value the ordinal will change itself.
+    private ReviewRating rating;
+
     @Column(nullable = false, name = "description")
     private String description;
 
@@ -20,7 +27,10 @@ public class Review {
 
     public Review(){}
 
-    public Review(String descr){}
+    public Review(ReviewRating rating,String descr){
+        this.description = descr;
+        this.rating = rating;
+    }
 
     public Long getId() {
         return Id;
@@ -46,4 +56,11 @@ public class Review {
         this.course = course;
     }
 
+    public ReviewRating getRating() {
+        return rating;
+    }
+
+    public void setRating(ReviewRating rating) {
+        this.rating = rating;
+    }
 }

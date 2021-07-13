@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,10 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
+    @Embedded
+    private Address address;//when we do not want to have relation with some entity but we want to
+    //have Address in Student we can use @Embedded here and @Embeddable in Address
 
     @Column(nullable = false,name = "fullName")
     private String name;
@@ -80,6 +85,14 @@ public class Student {
 
     public Passport getPassport() {
         return passport;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public void setPassport(Passport passport) {

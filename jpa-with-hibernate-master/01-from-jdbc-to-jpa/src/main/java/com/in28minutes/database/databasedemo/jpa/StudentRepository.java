@@ -1,8 +1,8 @@
 package com.in28minutes.database.databasedemo.jpa;
 
+import com.in28minutes.database.databasedemo.entity.Address;
 import com.in28minutes.database.databasedemo.entity.Course;
 import com.in28minutes.database.databasedemo.entity.Passport;
-import com.in28minutes.database.databasedemo.entity.Student;
 import com.in28minutes.database.databasedemo.entity.Student;
 import org.springframework.stereotype.Repository;
 
@@ -42,6 +42,16 @@ public class StudentRepository {
         //the database will not being changed
         System.out.println(student.getPassport().getNumber());
         return student;
+    }
+
+    public void setAddressDetails(Long id){
+
+        Student student = this.manager.find(Student.class,id);
+
+        student.setAddress(new Address("pesho","gisho","plovidv"));
+
+        this.manager.flush();//here we add address to Student
+
     }
 
     @Transactional//we put this here because of need of context
