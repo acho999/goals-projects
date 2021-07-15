@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- -->
+    <!--POM project object model -->
+    <!-- mvn help:effective-pom this appears effective-pom-->
+    <!-- pom can inherit properties from parent pom-->
+    <groupId>org.angel</groupId><!--unique for any organization -->
+    <artifactId>helloworld</artifactId><!-- descriptor for artifact/project product-->
+    <version>1</version><!--refers to a specific version of the project -->
+    <!-- groupId and version can be inherited from parent POM-->
+    <!-- 3.2.1-987-beta 3-major 2-minor 1-incremental version 987-build number from CI continious integration-->
+    <!-- beta -qualifier   SNAPSHOT-tells maven that this is development version -->
+    <!-- local repository - <user home>/.m2/-->
+    <!-- central repository - public hosted by mvn community-->
+    <!-- remote repo - other repos like - JBOSS, Oracle, Atlassian, Private hosted by companies-->
+    <!-- firsta maven checks local repo and then search in remote repositories-->
+    <!-- dependency - jar or pom file transitive dependency- may many levels deep -->
+    <!-- cycling dependency are not supported -->
+    <!-- dependency management - allows projec authors to define versions of artifacts to be used-->
+    <!-- dependency mediation - determins what wersion of dependency to be used when multiple such are available-->
+    <!-- nearest definition in the dependency tree is used -->
+    <!-- example - A->B,A->D2.0,B->D1.5  version 2.0 will be choosen-->
+    <!-- Exclude dependencies - ability to exclude dependency-->
+    <!-- optional dependency - aility to make dependency optional - excluded by default for downstream projects-->
+    <!-- Dependency scopes - Compile - available in all classpaths in project, propagated to downstream projects -->
+    <!-- Provided like Compile but is provided by container or jdk at runtime-->
+    <!-- Runtime needed on runtime - on runtime and test classpaths-->
+    <!-- Test - only available on test classpath, not transitive-->
+    <!-- System similar to Provided but jar is added to system explicitily via file path-->
+    <!-- Import import dependency of pom-->
+
+    <!-- lifecycle is pre-defined group of phases each phase can have one or more plugin goals-->
+    <!-- lifecycles and phases provide framework to call plugin goals sequential-->
+    <!-- all in maven is done by plugins-->
+    <!-- mvn have three predefined lifecycles clean,default,site-->
+    <!-- Clean - cleans project from build artefacts from working directory definedwith plugin bindings-->
+    <!-- Default - build and deploy the project defined without plugin bindings-->
+    <!-- creates website for the project-->
+    <!-- Clean lifecycle have 3 phases pre-clean,clean and post-clean. Clean phase have
+    plugin binding with mvn clean plugin and goal:clean-->
+
+    <!--Default lifecycle phases -->
+    <!-- Validate - verify project is correct-->
+    <!-- Compile - compile sourcecode-->
+    <!-- Test - test compiled sourcecode-->
+    <!-- Package - package compiled files to packaging type-->
+    <!-- Verify - run integration tests-->
+    <!-- Install - install to local mvn repo-->
+    <!-- Deploy - deploy to shared mvn repo-->
+
+    <!-- Site lifecycle have 4 phases pre-site,site,post-site,site-deploy .Site and site-deploy have
+    plugin binding with maven-site-plugin with two goals :site,:deploy-->
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId><!--this is directory in local repository -->
+            <artifactId>commons-lang3</artifactId><!-- this is folder which contains different versions-->
+            <version>3.8.1</version>
+        </dependency>
+    </dependencies>
+
+</project>

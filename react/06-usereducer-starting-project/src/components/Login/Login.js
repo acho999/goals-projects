@@ -3,7 +3,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
-import { act } from 'react-dom/cjs/react-dom-test-utils.production.min';
+import InputComponent from '../input/InputComponent'
 
 const emailReducer = (prevState, actionFunction)=>{
   if(actionFunction.type === 'USER_INPUT'){//here we check type from finction argument which we passed to dispatchEmail function
@@ -102,13 +102,20 @@ const Login = (props) => {
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <div
+        <InputComponent isValid={emailState.isValid} 
+                        value={emailState.value} 
+                        label='E-Mail' 
+                        id='email' 
+                        type='email'
+                        onChange={emailChangeHandler}
+                        onBlur={validateEmailHandler}/>
+        {/*<div
           className={`${classes.control} ${
             emailState.isValid === false ? classes.invalid : ''
           }`}
         >
           <label htmlFor="email">E-Mail</label>
-          {/*below we make two way binding with value={emailState.value} */}
+          {/*below we make two way binding with value={emailState.value} 
           <input
             type="email"
             id="email"
@@ -116,8 +123,8 @@ const Login = (props) => {
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
           />
-        </div>
-        <div
+        </div>*/}
+        {/*<div
           className={`${classes.control} ${
             //passwordIsValid === false ? classes.invalid : ''
             passwordState.isValid === false ? classes.invalid : ''
@@ -131,7 +138,15 @@ const Login = (props) => {
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
           />
-        </div>
+        </div> we commented this because we want to use reusable component in which we have to use props not context*/}
+        <InputComponent isValid={passwordState.isValid} 
+                        value={passwordState.value} 
+                        label='Password' 
+                        id='password' 
+                        type='password'
+                        onChange={passwordChangeHandler}
+                        onBlur={validatePasswordHandler}
+                        />
         <div className={classes.actions}>
           <Button type="submit" className={classes.btn} disabled={!formIsValid}>
             Login
