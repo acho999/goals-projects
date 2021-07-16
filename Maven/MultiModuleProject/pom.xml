@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.angel</groupId>
+    <artifactId>MultiModuleProject</artifactId>
+    <version>${revision}</version><!--here we use variable to take version
+    and will use this variable to propagate the version down to child modules and then make clean install-->
+    <!-- -->
+    <packaging>pom</packaging><!-- here we declare packaging for parent project-->
+
+    <modules><!-- here we declare child modules/projects-->
+        <module>jpa-entities</module>
+        <module>moduleGeneratedFromIntellij</module>
+    </modules>
+
+    <properties><!-- put properties here because other child modules will inherit them from here-->
+        <revision>1.0-SNAPSHOT
+        </revision><!--we keep this here in order to have one place to change if it is needed -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+        <java.version>11</java.version>
+        <lombok.version>1.18.20</lombok.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin><!--we use this plugin in order to resolve variables problem btw parent and children -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.2</version>
+                <configuration>
+                    <flattenMode>bom</flattenMode>
+                </configuration>
+                <executions>
+                    <!-- enable flattening -->
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <!-- ensure proper cleanup -->
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin><!--this plugin is for compatibility for mvn versions below 3.5 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <executions>
+                    <execution>
+                        <id>enforce-env-requiremenets</id>
+                        <goals>
+                            <goal>
+                                enforce
+                            </goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[11,)</version>
+                                </requireJavaVersion>
+                                <requireJavaVersion>
+                                    <version>[3.5,)</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <!--BOM is place for declaring versions of dependencies between <dependencyManagement> tags
+     BOM can be declared in other POM file and this POM can be put btw <dependencyManagement>
+     tags also it is common case to declare in the Parent POM or remote parent POM-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency><!--here we declare BOM and dependencies which versions
+             can be managed here in properties and dependencyManagement sections-->
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

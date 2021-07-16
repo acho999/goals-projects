@@ -36,9 +36,17 @@
     <!-- lifecycles and phases provide framework to call plugin goals sequential-->
     <!-- all in maven is done by plugins-->
     <!-- mvn have three predefined lifecycles clean,default,site-->
-    <!-- Clean - cleans project from build artefacts from working directory definedwith plugin bindings-->
+    <!-- Clean - cleans project from build artefacts from working directory defined with plugin bindings
+    remove target directory with subdirectories  - Maven Clean Plugin
+    -->
+
     <!-- Default - build and deploy the project defined without plugin bindings-->
-    <!-- creates website for the project-->
+    <!-- creates website for the project - Maven compiler plugin - have two goals compiler:compile
+    compiler:testCompile
+    Maven surfire plugin - have one goal surfire:test used to execute unit test
+    Maven jar plugin - have two goals jar:jar, jar:test-jar purpose is to build jars
+    Maven deploy plugin have two goals deploy:deploy, deploy:deploy-file deploy project artefacts to remote repo-->
+
     <!-- Clean lifecycle have 3 phases pre-clean,clean and post-clean. Clean phase have
     plugin binding with mvn clean plugin and goal:clean-->
 
