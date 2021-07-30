@@ -1,6 +1,9 @@
 package collections.impl;
+import collections.api.IStack;
+import java.util.Arrays;
+import java.util.Iterator;
 
-public class CustomStack<T> {
+public class CustomStack<T> implements IStack<T> {
 
     private T[] elements;
     private int top;
@@ -47,7 +50,10 @@ public class CustomStack<T> {
     }
 
 
-
+    @Override
+    public Iterator<T> iterator() {
+        return Arrays.stream(this.elements).iterator();
+    }
 }
 
 class StackFullException extends RuntimeException {

@@ -1,6 +1,11 @@
 package collections.impl;
 
-public class CustomQueue<T> {
+import collections.api.IQueue;
+
+import java.util.Arrays;
+import java.util.Iterator;
+
+public class CustomQueue<T> implements IQueue<T> {
 
     private T[] elements;
     private int capacity;
@@ -55,6 +60,10 @@ public class CustomQueue<T> {
         return this.count == capacity;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return Arrays.stream(this.elements).iterator();
+    }
 }
 
 class CustomQueueFullException extends RuntimeException{

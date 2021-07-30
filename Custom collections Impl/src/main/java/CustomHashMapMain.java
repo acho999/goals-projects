@@ -15,6 +15,10 @@ public class CustomHashMapMain {
             map.put(i,i);
         }
 
+        for (CustomHashMap.Entry<Integer,Integer> element : map.entrySet()){
+            System.out.println(element.getKey() + " " + element.getValue());
+        }
+
         map.put(1,20);
 
         map.remove(0);

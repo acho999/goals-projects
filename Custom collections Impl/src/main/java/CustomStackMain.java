@@ -11,6 +11,13 @@ public class CustomStackMain {
         stack.push(41);
         stack.push(51);
 
+        for (Integer integer : stack) {
+            if (integer == null) {
+                break;
+            }
+            System.out.println(integer + " i");
+        }
+
         System.out.print("Popped items: ");
         System.out.print(stack.pop()+" " + "\n");
         System.out.print(stack.pop()+" ");
