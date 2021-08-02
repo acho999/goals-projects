@@ -1,5 +1,7 @@
 package collections.impl;
 
+import collections.api.IMap;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CustomHashMap<K, V> {
+public class CustomHashMap<K, V> implements IMap<K,V> {
 
     private int capacity = 2;
     private Entry<K, V>[] table;
@@ -19,10 +21,12 @@ public class CustomHashMap<K, V> {
         this.table = new Entry[capacity];
     }
 
+    @Override
     public int size() {//TODO returns actual count of elements in array
         return this.count;
     }
 
+    @Override
     public void put(K key, V value) {
         if (key == null) {
             return;
@@ -68,6 +72,7 @@ public class CustomHashMap<K, V> {
         }
     }
 
+    @Override
     public V get(K key) {
 
         if (key == null) {
@@ -95,14 +100,17 @@ public class CustomHashMap<K, V> {
         return current.getValue();//TODO
     }
 
+    @Override
     public boolean containsKey (K key){
         return true;//todo
     }
 
+    @Override
     public boolean containsValue (V value){
         return true;//TODO
     }
 
+    @Override
     public boolean remove(K key) {
 
         int hash = this.hash(key);
@@ -134,6 +142,7 @@ public class CustomHashMap<K, V> {
         return false;
     }
 
+    @Override
     public boolean isEmpty() {
         return this.count == 0;
     }
@@ -153,6 +162,7 @@ public class CustomHashMap<K, V> {
         return builder.toString();
     }
 
+    @Override
     public Set<Entry<K, V>> entrySet() {//here we return all entries
         Set<Entry<K, V>> elements = new HashSet<Entry<K, V>>();
         this.entriesList = new ArrayList<>();
@@ -164,7 +174,8 @@ public class CustomHashMap<K, V> {
         return elements;
     }
 
-    private Collection<Entry<K, V>> getEntries(Entry<K, V> entry) {
+    @Override
+    public Collection<Entry<K, V>> getEntries(Entry<K, V> entry) {
 
         if (entry.next == null) {
             this.entriesList.add(entry);
@@ -179,12 +190,14 @@ public class CustomHashMap<K, V> {
 
     }
 
-    private void increseCapacity() {
+    @Override
+    public void increseCapacity() {
         int length = capacity * 2;
         table = Arrays.copyOf(this.table, length);
     }
 
-    private int hash(K key) {
+    @Override
+    public int hash(K key) {
         return (key.hashCode()) % this.capacity;
     }
 

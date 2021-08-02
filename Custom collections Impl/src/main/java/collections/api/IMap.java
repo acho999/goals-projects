@@ -9,7 +9,7 @@ public interface IMap<K,V> {
 
     int hash(K key);
     void increseCapacity();
-    Collection<CustomHashMap.Entry<K, V>> getEntry(CustomHashMap.Entry<K, V> entry);
+    Collection<CustomHashMap.Entry<K, V>> getEntries(CustomHashMap.Entry<K, V> entry);
     Set<CustomHashMap.Entry<K, V>> entrySet();
     boolean isEmpty();
     boolean remove(K key);

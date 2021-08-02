@@ -19,18 +19,22 @@ public class CustomStack<T> implements IStack<T> {
         this(16);
     }
 
+    @Override
     public int size(){
         return this.elements.length;
     }
 
+    @Override
     public boolean isEmpty(){
         return this.top == -1;
     }
 
+    @Override
     public boolean isFull(){
         return this.top == capacity-1;
     }
 
+    @Override
     public void push(T value){
         if (this.isFull()){
             throw new StackFullException("Stack is full!");
@@ -38,6 +42,7 @@ public class CustomStack<T> implements IStack<T> {
         this.elements[++top] = value;
     }
 
+    @Override
     public T pop(){
         if (this.isEmpty()){
             throw new StackEmptyException("Stack is empty!");
@@ -45,6 +50,7 @@ public class CustomStack<T> implements IStack<T> {
         return this.elements[top--];
     }
 
+    @Override
     public T peek(){
         return this.elements[top];
     }

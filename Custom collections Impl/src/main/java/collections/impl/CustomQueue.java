@@ -26,6 +26,7 @@ public class CustomQueue<T> implements IQueue<T> {
         this(16);
     }
 
+    @Override
     public void add(T value){
         if(isFull()){
             throw new CustomQueueFullException("Queue is full!");
@@ -37,6 +38,7 @@ public class CustomQueue<T> implements IQueue<T> {
         this.count++;
     }
 
+    @Override
     public T remove(){
         if(isEmpty()){
             throw new CustomQueueEmptyException("Queue is empty");
@@ -47,15 +49,18 @@ public class CustomQueue<T> implements IQueue<T> {
         count--;
         return this.elements[this.front++];
     }
-
+    
+    @Override
     public int elementsCount(){
         return this.count;
     }
 
+    @Override
     public boolean isEmpty(){
         return this.count == 0;
     }
 
+    @Override
     public boolean isFull(){
         return this.count == capacity;
     }
