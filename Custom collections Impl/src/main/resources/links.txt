@@ -2,3 +2,4 @@ https://www.javamadesoeasy.com/2015/02/arraylist-custom-implementation.html - li
 https://www.javamadesoeasy.com/2015/02/hashmap-custom-implementation.html - link to custom implementation of HashMap
 https://www.javamadesoeasy.com/2015/01/stacks-with-generics.html - link to custom implementation of Stack
 https://www.javamadesoeasy.com/2015/01/queues.html - link to custom implementation of Queue
+https://www.javamadesoeasy.com/2015/02/set-custom-implementation-add-contains.html - link to custom implementation of Set

@@ -61,6 +61,11 @@ public class CustomQueue<T> implements IQueue<T> {
     }
 
     @Override
+    public void clear() {
+
+    }
+
+    @Override
     public boolean isFull(){
         return this.count == capacity;
     }

@@ -6,6 +6,7 @@ public interface IQueue<T> extends Iterable<T>{
     T remove();
     boolean isFull();
     boolean isEmpty();
+    void clear();
     int elementsCount();
 
 }

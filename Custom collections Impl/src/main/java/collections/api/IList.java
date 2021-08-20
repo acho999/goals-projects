@@ -6,6 +6,7 @@ public interface IList<T> extends Iterable<T>{
 
     //void increseCapacity();
     void add(T element);
+    void clear();
     T get(int index);
     Object remove(int index);
     int size();

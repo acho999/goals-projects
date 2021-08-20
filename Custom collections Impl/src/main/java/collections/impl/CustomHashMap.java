@@ -1,15 +1,19 @@
 package collections.impl;
 
 import collections.api.IMap;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class CustomHashMap<K, V> implements IMap<K,V> {
+
+    Map<String,String> a = new HashMap<>();
 
     private int capacity = 2;
     private Entry<K, V>[] table;
@@ -197,8 +201,28 @@ public class CustomHashMap<K, V> implements IMap<K,V> {
     }
 
     @Override
+    public Set<K> keySet() {
+        return null;
+    }
+
+    @Override
+    public Collection<V> values() {
+        return null;
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
     public int hash(K key) {
         return (key.hashCode()) % this.capacity;
+    }
+
+    @Override
+    public Iterator<CustomHashMap.Entry<K,V>> iterator() {
+        return Arrays.stream(this.table).iterator();
     }
 
     public static class Entry<K, V> {
