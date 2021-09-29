@@ -8,7 +8,7 @@ public abstract class Pizza {
     public enum Topping {HAM, MUSHROOM, ONION, PAPER, SAUSIGE};
     final Set<Topping> toppings;
 
-    abstract static class Builder<T extends Builder>{//generic type with recursive type parameter
+    abstract static class Builder<T extends Builder>{//generic type with recursive type parameter this class is protected
         EnumSet<Topping> toppings = EnumSet.noneOf(Topping.class);//empty collection
 
         public T addTopping(Topping topping) {

@@ -7,7 +7,7 @@ public class NyPizza extends Pizza{
     public enum Size { SMALL, MEDIUM, LARGE }
     private final Size size;
 
-    private static class Builder extends Pizza.Builder<Builder>{
+    public static class Builder extends Pizza.Builder<Builder>{
 
         private final Size size;
 
@@ -21,7 +21,7 @@ public class NyPizza extends Pizza{
         }
 
         @Override
-        Pizza build() {
+        public NyPizza build() {
             return new NyPizza(this);//here we give an instance of builder to private constructor and this instance is passed to Pizza super() parent constructor
         }//"this" is equal to builder instance
     }
