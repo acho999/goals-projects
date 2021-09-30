@@ -1,6 +1,7 @@
 import com.angel.abstractBuilderPattern.NyPizza;
 import com.angel.abstractBuilderPattern.Pizza;
 import com.angel.builderPattern.Person;
+import com.angel.staticFacoryMethodsInsteadOfConstructors.StaticFactoryMethodClass;
 
 public class Application {
 
@@ -14,6 +15,8 @@ public class Application {
             .Builder(NyPizza.Size.LARGE)
             .addTopping(Pizza.Topping.MUSHROOM)
             .build();
+
+        StaticFactoryMethodClass staticF = StaticFactoryMethodClass.of("Gosho");
 
     }
 

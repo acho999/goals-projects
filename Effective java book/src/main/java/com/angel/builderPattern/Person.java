@@ -19,11 +19,11 @@ public class Person {
             this.age = age;
         }
         public Builder setHeight (double height){
-            height = height;
+            this.height = height;
             return this;
         }
         public Builder setWeight (double weight){
-            weight = weight;
+            this.weight = weight;
             return this;
         }
         public Person build(){
