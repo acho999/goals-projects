@@ -200,4 +200,55 @@
                     </executions>
                 </plugin>
             </plugins>
-        </build> -->
+        </build>
+
+        <--this way we can ignore some dependency classes
+        <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-enforcer-plugin</artifactId>
+                  <executions>
+                      <execution>
+                          <id>enforce-ban-duplicate-classes</id>
+                          <goals>
+                              <goal>enforce</goal>
+                          </goals>
+                          <configuration>
+                              <!-- TODO Start using enforcer when we can clean the dependency tree conflicts. -->
+                              <skip>true</skip>
+                              <rules>
+                                  <banDuplicateClasses>
+                                      <findAllDuplicates>true</findAllDuplicates>
+                                      <!-- omit system and provided scopes -->
+                                      <scopes>
+                                          <scope>compile</scope>
+                                          <scope>test</scope>
+                                          <scope>runtime</scope>
+                                      </scopes>
+                                      <ignoreClasses>
+                                          <!-- Ignore duplication of asm lib due to poor 'vendoring' practices -->
+                                          <ignoreClass>org.objectweb.asm.*</ignoreClass>
+
+
+                                          <!-- Ignore commons-logging duplication in core.cache.common:
+                                          Found in:
+                                          org.slf4j:jcl-over-slf4j:jar:1.7.13:provided
+                                          commons-logging:commons-logging:jar:1.2:compile
+                                          -->
+                                          <ignoreClass>org.apache.commons.logging.*</ignoreClass>
+
+                                          <!--
+                                          We are including both org.aspectj:aspectjweaver:jar:1.8.9:compile
+                                          and org.aspectj:aspectjrt:jar:1.8.9:runtime that have
+                                          duplicate classes as part of Springboot/Springboard
+                                          -->
+                                          <ignoreClass>org.aspectj.*</ignoreClass>
+                                          <ignoreClass>org.zalando.logbook.*</ignoreClass>
+                                      </ignoreClasses>
+                                  </banDuplicateClasses>
+                              </rules>
+                              <fail>true</fail>
+                          </configuration>
+                      </execution>
+                  </executions>
+              </plugin> -->
+      -->
