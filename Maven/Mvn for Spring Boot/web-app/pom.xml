@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.angel</groupId>
     <artifactId>web-app</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
 
     <dependencies>
