@@ -15,7 +15,7 @@ public class BitMasking {
         int status = 0b011;//after b first bit is power, second is paper, third is toner
 
         int paperMask = 1 << 1; //0b001 = 1 then we move bits left with 1 position and it becomes 010
-        //which means we have paer because we have 1
+        //which means we have paper because we have 1
 
         //check if we have paper
         /*
