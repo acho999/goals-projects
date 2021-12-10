@@ -25,7 +25,7 @@ public class BankBalanceExactlyOnceApp {
     public static void main(String[] args) {
         Properties config = new Properties();
 
-        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "bank-balance-application");
+        config.put(StreamsConfig.APPLICATION_ID_CONFIG, "E-commerce-application");
         config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         //here we do not config ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG and ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
@@ -46,7 +46,6 @@ public class BankBalanceExactlyOnceApp {
         KStream<String, JsonNode> bankTransactions = builder.stream("bank-transactions",
                 Consumed.with(Serdes.String(), jsonSerde));//here we read stream from BankTransactionProducer we consume what is produced from producer
         //in order to get changes in balance and re balance the amount
-        
 
         // create the initial json object for balances
         ObjectNode initialBalance = JsonNodeFactory.instance.objectNode();
@@ -63,7 +62,6 @@ public class BankBalanceExactlyOnceApp {
                                 .withKeySerde(Serdes.String())
                                 .withValueSerde(jsonSerde)
                 );
-
         //here we produce and send new balance records to bank-balance-exactly-once topic in kafka as json
         bankBalance.toStream().to("bank-balance-exactly-once", Produced.with(Serdes.String(), jsonSerde));
 
