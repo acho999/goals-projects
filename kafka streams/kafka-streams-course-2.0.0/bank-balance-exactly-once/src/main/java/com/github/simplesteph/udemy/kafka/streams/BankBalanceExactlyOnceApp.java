@@ -31,7 +31,7 @@ public class BankBalanceExactlyOnceApp {
         //here we do not config ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG and ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
         //because below we use JSONSerde
         // we disable the cache to demonstrate all the "steps" involved in the transformation - not recommended in prod
-        config.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, "0");
+        config.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 10 * 1024 * 1024L);
 
         // Exactly once processing!!
         config.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, StreamsConfig.EXACTLY_ONCE);
