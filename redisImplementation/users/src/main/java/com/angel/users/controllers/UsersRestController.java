@@ -5,6 +5,8 @@ import com.angel.models.dto.UserDto;
 import com.angel.users.services.api.UsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +27,8 @@ public class UsersRestController {
     @Autowired
     private UsersService usersService;
 
+    private static final Logger log = LoggerFactory.getLogger(UsersRestController.class);
+
     @ApiOperation(value = "Creates user")
     @RequestMapping(value = "/create",
         method = RequestMethod.POST,
@@ -38,7 +42,7 @@ public class UsersRestController {
     }
 
     @ApiOperation(value = "Updates user")
-    @RequestMapping(value = "/create",
+    @RequestMapping(value = "/update",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE,
         consumes = MediaType.APPLICATION_JSON_VALUE
@@ -75,6 +79,7 @@ public class UsersRestController {
         consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
         UserDto dto = this.usersService.getUser(userId);
+        log.info("Users controller userId {}",userId);
         ResponseEntity<UserDto> user = new ResponseEntity<>(dto, HttpStatus.OK);
         return user;
     }
