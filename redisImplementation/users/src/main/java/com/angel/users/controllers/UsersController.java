@@ -22,12 +22,12 @@ import java.util.Collection;
 @Api(value = "UsersRestController")
 @RestController
 @RequestMapping(value = "/users")
-public class UsersRestController {
+public class UsersController {
 
     @Autowired
     private UsersService usersService;
 
-    private static final Logger log = LoggerFactory.getLogger(UsersRestController.class);
+    private static final Logger log = LoggerFactory.getLogger(UsersController.class);
 
     @ApiOperation(value = "Creates user")
     @RequestMapping(value = "/create",
@@ -49,7 +49,7 @@ public class UsersRestController {
     )
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
         UserDto dto = this.usersService.updateUser(userDto);
-        ResponseEntity<UserDto> user = new ResponseEntity<>(dto, HttpStatus.OK);
+        ResponseEntity<UserDto> user = new ResponseEntity<>(dto, HttpStatus.NO_CONTENT);
         return user;
     }
 

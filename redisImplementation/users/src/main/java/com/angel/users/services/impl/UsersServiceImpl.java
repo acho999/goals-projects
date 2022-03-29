@@ -2,7 +2,7 @@ package com.angel.users.services.impl;
 
 import com.angel.models.dto.UserDto;
 import com.angel.models.entities.User;
-import com.angel.users.controllers.UsersRestController;
+import com.angel.users.controllers.UsersController;
 import com.angel.users.exceptions.UserNotFoundException;
 import com.angel.users.repositories.UsersRepository;
 import com.angel.users.services.api.UsersService;
@@ -26,7 +26,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private UsersRepository repository;
-    private static final Logger log = LoggerFactory.getLogger(UsersRestController.class);
+    private static final Logger log = LoggerFactory.getLogger(UsersController.class);
 
     @Override
     @Cacheable(value = "users", key = "#id")
