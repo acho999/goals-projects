@@ -169,9 +169,26 @@
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase><!--to clean the project when starts -->
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
+                <configuration>
+                    <annotationProcessorPaths>
+
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -226,7 +243,8 @@
                                 </requireJavaVersion>
                                 <requireReleaseDeps>
                                     <onlyWhenRelease>true</onlyWhenRelease>
-                                    <message>Release builds must not have on snapshot dependencies</message>
+                                    <message>Release builds must not have on snapshot dependencies
+                                    </message>
                                 </requireReleaseDeps>
                             </rules>
                         </configuration>
