@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <servers>
+        <server>
+            <id>maven.oracle.com</id>
+            <username>your oracle user name here</username>
+            <password>your password here</password>
+            <configuration>
+                <basicAuthScope>
+                    <host>ANY</host>
+                    <port>ANY</port>
+                    <realm>OAM 11g</realm>
+                </basicAuthScope>
+                <httpConfiguration>
+                    <all>
+                        <params>
+                            <property>
+                                <name>http.protocol.allow-circular-redirects</name>
+                                <value>%b,true</value>
+                            </property>
+                        </params>
+                    </all>
+                </httpConfiguration>
+            </configuration>
+        </server>
+    </servers>
+
+
+    <profiles>
+        <profile>
+            <id>jboss</id>
+            <repositories>
+                <repository>
+                    <id>redhat-ga</id>
+                    <url>https://maven.repository.redhat.com/ga/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>jboss</activeProfile>
+    </activeProfiles>
+</settings>
