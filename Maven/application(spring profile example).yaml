@@ -1,0 +1,564 @@
+#
+# Global/Default configuration (possibly overridden by a profile/environment specific section)
+#
+spring:
+  main.banner-mode: "off"
+  datasource.initialize: false  # we use our own datasource initialization (to handle multiple types of dbs)
+
+project.description: Orchestration layer for calls from the Shutterfly web cart to underlying services.
+
+endpoints.health.sensitive: false # show full health details at /health since service is not publicly accessible
+management.context-path: /_internal
+
+json.scan.packages: >
+  com.shutterfly.model
+
+service:
+  tags:
+    App: web-cart-orch
+    Environment: ${service.env}
+    AppVersion:  "@project.version@"
+    BusinessUnit: Consumer
+    ManagedBy: commerce-team
+    ManagedByEmail: commerce-eng@shutterfly.com
+
+service.redis.essential: false
+
+# If you are having Hystrix timeout troubles while debugging, this will help
+#hystrix.enabled: false
+
+# For "/_internal/info" diagnostic endpoint. These values are replaced at build time by maven's
+# maven-resources-plugin. Then, spring-boot will pick up any "info.*" properties for the
+# /_internal/info endpoint.
+info:
+  build:
+    groupId: "@project.groupId@"
+    artifactId: "@project.artifactId@"
+    description: "@project.description@"
+    version: "@project.version@"
+    name: "Web Cart Orchestration Service"
+    java.version: "@java.version@"
+
+country.exclusions.alpha2: "BI,LB" # Burundi and Lebanon
+country.strictaddress.alpha2: "US,CA" # US and Canada
+
+# shipping method display name by shipId and/or estimates earliest/latest date
+cart.bag.shippingmethod.displayname.no.shipping.estimates.STANDARD: Economy
+cart.bag.shippingmethod.displayname.no.shipping.estimates.PRIORITY: Standard
+cart.bag.shippingmethod.displayname.no.shipping.estimates.2DAY: Expedited
+cart.bag.shippingmethod.displayname.no.shipping.estimates.1DAY: Rush
+cart.bag.shippingmethod.displayname.no.shipping.estimates.1DAYRUSH: Super Rush
+cart.bag.shippingmethod.displayname.no.shipping.estimates.INTLCAN: Canada
+cart.bag.shippingmethod.displayname.no.shipping.estimates.INTLSTD: International
+cart.bag.shippingmethod.displayname.no.shipping.estimates.VIRTUAL: Emailed
+cart.bag.shippingmethod.displayname.no.shipping.estimates.DMUS: Directly Mailed
+cart.bag.shippingmethod.displayname.no.shipping.estimates.STORE1HR: 1 Hour
+cart.bag.shippingmethod.displayname.no.shipping.estimates.STORE24HR: 24 Hours
+cart.bag.shippingmethod.displayname.no.shipping.estimates.STORE1TO3DAY: 1-3 Days
+cart.bag.shippingmethod.displayname.no.shipping.estimates.STORE1TO5DAY: 1-5 Days
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.STANDARD: Economy shipping*
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.PRIORITY: Standard shipping
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.2DAY: Expedited shipping
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.1DAY: Rush shipping
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.1DAYRUSH: Super Rush shipping
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.INTLCAN: Canada shipping
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.INTLSTD: International shipping
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.VIRTUAL: Emailed
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.DMUS: Directly Mailed
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.STORE1HR: 1 Hour
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.STORE24HR: 24 Hours
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.STORE1TO3DAY: 1-3 Days
+cart.bag.shippingmethod.displayname.no.shipping.estimates.alternative.STORE1TO5DAY: 1-5 Days
+
+cart.bag.shippingmethod.truck.displayname.range: 'Estimated arrival: between %s - %s'
+cart.bag.shippingmethod.truck.displayname.exact: 'Estimated arrival: get it by %s (guaranteed)'
+cart.bag.shippingmethod.truck.displayname.alternative.range: 'Estimated Arrival: %s - %s'
+cart.bag.shippingmethod.truck.displayname.alternative.exact: 'Estimated Arrival: By %s'
+
+cart.bag.cartitem.estimatedarrival.dateformat: EEE M/d
+
+cart.bag.shippingmethod.displayname.STANDARD: Economy - Get it between %s - %s
+cart.bag.shippingmethod.displayname.PRIORITY: Standard - Get it between %s - %s
+cart.bag.shippingmethod.displayname.2DAY: Expedited - Get it by %s (guaranteed)
+cart.bag.shippingmethod.displayname.1DAY: Rush - Get it by %s (guaranteed)
+cart.bag.shippingmethod.displayname.1DAYRUSH: Super Rush - Get it by %s (guaranteed)
+cart.bag.shippingmethod.displayname.INTLCAN: Canada - Get it between  %s - %s
+cart.bag.shippingmethod.displayname.INTLSTD: International - Get it between  %s - %s
+cart.bag.shippingmethod.displayname.VIRTUAL: Emailed
+cart.bag.shippingmethod.displayname.DMUS: Directly Mailed
+cart.bag.shippingmethod.displayname.STORE1HR: 1 Hour
+cart.bag.shippingmethod.displayname.STORE24HR: 24 Hours
+cart.bag.shippingmethod.displayname.STORE1TO3DAY: 1-3 Days
+cart.bag.shippingmethod.displayname.STORE1TO5DAY: 1-5 Days
+
+cart.bag.thumbnail.url.static.GIFTCERT: '/img_/GENX/imgGiftCertificate140x140.png'
+cart.bag.thumbnail.url.static.EASEL: '/i/shop/pipshots/easel_s.jpg'
+cart.bag.thumbnail.url.static.WPD_SAMPLE_KIT: '/i/shop/pipshots/ssk_cart_s.jpg'
+
+# Amounts for testing Cybersource errors.
+# Based on http://apps.cybersource.com/library/documentation/sbc/SB_API_Testing/SB_API_Testing.pdf
+# The property values takes in individual amounts as well as an amount range (which is indicated by hyphen `-`).
+# Min and Max amount in the range is inclusive.
+cybersource:
+  errorAmounts: >
+                2000,2201-2205,2218-2220,2225,2227,2231,2233,2234,2236,2238,2239,2241,
+                2243-2249,2253,2257,2258,2261,2263-2271,2273,2275,2301-2304,2401,2402,
+                2501-2503,2505,2508-2510,2519,2521-2524,2530,2531,2540-2551,2560-2564,
+                2567,2570-2572,2591,2592,2594-2597,2602,2603,2605-2607,2610,2617,2719,
+                2740-2742,2747,2750-2760,2763-2769,2802,2806,2811,2813,2825,2833,2834,
+                2902-2906,3262,3305-3307
+
+mobile.app.skus: '4X4_APP,4X6_APP'
+
+# Required by signal fx bean startup. This will get overridden by the deploy script during actual deployment.
+# This only seemed to be required by the mvc tests, and should probably be moved below, but will require all the
+# those tests to have @ActiveProfiles set.
+sfly.server.hostname: localhost
+service.tags.inactive_retention_days: 7
+
+---
+#
+# Test and default configuration
+# These settings are applied when:
+#    - running unit/integration tests (the "test" profile is active)
+#    - when running without specifying a profile (e.g., for local development)
+#
+spring:
+  profiles: test
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_0AuXDy6NQ
+
+sfly:
+  config:
+    monitor:
+      enabled: false
+
+service:
+  cache:
+    caches:
+      - name: ff4j-cache
+      - name: iam-config
+
+payment.merchant.id: 'shutterfly_dev'
+payment.store.id: 4
+
+services:
+
+  cart:
+    additem: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/items
+    deleteitem: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/items/{itemId}
+    createcart: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts
+    getcart: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}
+    getcartsummaries: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/cartSummaries
+    getpricedcart: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/priced
+    ordercart: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/checkout
+    recipients: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/recipients
+    orderpayload: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/orderpayload
+    updatecartcredit: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/credit
+    addcartpromo: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/promos/{promoId}
+    updateitemmetadata: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/items/{itemId}/metadata/{metadataKey}/{metadataValue}
+    deleteitemmetadata: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/items/{itemId}/metadata/{metadataKey}
+    updaterecipientmetadata: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/recipients/{recipientId}/metadata/{metadataKey}/{metadataValue}
+    deleterecipientmetadata: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/recipients/{recipientId}/metadata/{metadataKey}
+
+  errors:
+    createEntry: https://services-errors.dev.shutterfly.com/errors/v1/users/{userId}
+
+  payments:
+    getpayment: https://user.dev.shutterfly.com/users/{userId}/paymentinfo
+    getpaymenttoken: /stores/{storeId}/payments/tokens
+    updatepaymenttoken: /stores/{storeId}/payments/tokens/{tokenId}
+    deletepaymenttokens: /stores/{storeId}/payments/tokens/members/{memberId}
+    accesstoken: /member/{memberId}/gateway/{gateway}/accessToken
+    vcdecryptdata: /stores/{storeId}/vc/data
+    getsignature: https://services-payment.dev.shutterfly.com/stores/{storeId}/signs
+    afterpayConfig: https://services-payment.dev.shutterfly.com/stores/{storeId}/afterpay/config
+    afterpayCheckout: https://services-payment.dev.shutterfly.com/stores/{storeId}/afterpay/checkout
+
+  users:
+    addressverification: https://ws.dev.shutterfly.com/services/address-verification/verify?address1={address1}&address2={address2}&city={city}&state={state}&zipCode={zipCode}
+    getcontacts: https://addressbook.dev.shutterfly.com/{userId}/contacts?pageSize=2147483647
+    createcontact: https://addressbook.dev.shutterfly.com/{userId}/contacts?validate=none
+    getselfcontact: https://addressbook.dev.shutterfly.com/{userId}/contacts/self
+    setselfemail: https://addressbook.dev.shutterfly.com/{userId}/contacts/self?emailId={emailId}
+    specificcontact: https://addressbook.dev.shutterfly.com/{userId}/contacts/{contactId}?validate=none
+    getorder: https://orderapi/order/v1/stores/SFLY/orders/user/{userId}/order/{orderSerialNo}
+    getorders: https://orderapi/order/v1/stores/SFLY/orders/user/{userId}/order/list?max={max}&startNum={startNum}
+    getpromos: https://services-promotion.dev.shutterfly.com/promotions/users/{userId}/promotions
+    getuserinfo: https://user.dev.shutterfly.com/users/{uid}
+    getuserstat: https://user.dev.shutterfly.com/userstat/{uid}/userOrderStat
+    checkemail: https://user.dev.shutterfly.com/api/users/exists?emailAddress={email}
+    getiamconfig: https://user.dev.shutterfly.com/iamconfig/client/WEB
+
+  shipping:
+    getestimate: https://services-shipping.dev.shutterfly.com/shipping/estimate?verbose=true
+    getcountries: https://services-shipping.dev.shutterfly.com/shipping/v1/countries?shippable=true
+
+  orderapi:
+    placeorder: https://orderapi/order/v1/stores/SFLY/orders
+    cancelorder: https://orderapi/order/v1/stores/SFLY/orders/user/{userId}/cancel/{orderSerialNo}
+    persistsmscontact: https://orderapi/order/v1/stores/SFLY/orders/notification/smscontact
+
+  credits:
+    giftcard.redeem: https://services-credits.dev.shutterfly.com/giftcards/users/{userId}/redemption
+    giftcert.redeem: https://services-credits.dev.shutterfly.com/credits/users/{userId}/balance
+    giftcert.product: https://services-credits.dev.shutterfly.com/credits/giftcertificate/{sku}
+
+  ops:
+    createproductforproject: https://services-ops.dev.shutterfly.com/orderable/v4/users/{userId}/products/projects
+    createproductforsku: https://services-ops.dev.shutterfly.com/orderable/v4/users/{userId}/products/skus
+    createproductforgift: https://services-ops.dev.shutterfly.com/orderable/v4/users/{userId}/products/addons
+    prepaidbundles: https://services-ops.dev.shutterfly.com/orderable/v4/users/{userId}/products/prepaidbundles
+
+  promotions:
+    getpromoterms: https://services-promotion.dev.shutterfly.com/promotions/{promoId}/termsAndConditions
+    getfriendly: https://services-promotion.dev.shutterfly.com/promotions/friendlycode/{friendlyCodeName}
+    findpromos: https://services-promotion.dev.shutterfly.com/promotions/{promoId}
+    freeshipupsell: https://services-promotion.dev.shutterfly.com/promotions/freeshipupsell/getremainvalue
+
+  product:
+    getconfig: httpss://product.dev.shutterfly.com/product/v1/configs/{productConfigId}
+    getconfigs: https://product.dev.shutterfly.com/product/v1/configs
+    lookupqty: https://product.dev.shutterfly.com/lookupQty/productquantitytiers/sku/{sku}
+    lookupqtybypci: https://product.dev.shutterfly.com/lookupQty/productquantitytiers/productconfiguration/{productConfigId}
+    lookupgifts: https://product.dev.shutterfly.com/product/v1/gifts/lookup
+    metadata: https://services-product.dev.shutterfly.com/product/v1/products/{sku}/metadata
+
+  category:
+    getcategory: https://product-catalog.dev.shutterfly.com/product/catalog/v1/category/{categoryCode}
+
+  retailstore:
+    getchains: https://services-retail-store.dev.shutterfly.com/retail-store/v1/chains
+    getstore: https://services-retail-store.dev.shutterfly.com/retail-store/v1/store/{storeId}
+    getstoreswithindistance: https://services-retail-store.dev.shutterfly.com/retail-store/v1/store
+    getsupportedretailproducts: https://services-retail-store.dev.shutterfly.com/retail-store/v1/products/supported
+    getpricelookup: https://services-retail-store.dev.shutterfly.com/retail-store/v1/products/price/lookup
+    getpricelookupv2: https://services-retail-store.dev.shutterfly.com/retail-store/v2/products/price/lookup
+
+  price:
+    lookup: https://services-pricing.dev.shutterfly.com/price/v1/lookup/unit
+    quantity.tiers: https://services-pricing.dev.shutterfly.com/price_engine/quantity-price-tiers
+
+  pipdata:
+    getmetadata: https://pip-data.dev.shutterfly.com/pip-data/product/{productCode}
+
+  productCatalog:
+    getcategory: https://product-catalog.dev.shutterfly.com/product/catalog/v1/category/{categoryCode}
+    getmetadata: https://product-catalog.dev.shutterfly.com/product/catalog/v1/product/{productCode}
+    getattributesbyproductcode: https://product-catalog.dev.shutterfly.com/product/catalog/v1/product/{productCode}/attributes
+    getattributesbyproductcodeskucode: https://product-catalog.dev.shutterfly.com/product/catalog/v1/product/{productCode}/{skuCode}/attributes
+
+  availability:
+    getbatchavailability: https://services-availability.dev.shutterfly.com/availability/v1/batch
+
+  oms:
+    updateOrderBill: https://services-oms.dev.shutterfly.com/payments/users/{userId}/order/{orderSerialNo}/updateBilling
+
+  subscription:
+    getactiveplans: https://services-subscription.dev.shutterfly.com/plan/app/users/{userId}/search
+
+  payment.host: https://services-payment.dev.shutterfly.com
+  pol.host: https://pricing-orchestration.dev.shutterfly.com
+
+  site:
+    geteditandpreviewstrategy: https://site-services.dev.shutterfly.com/users/projects/strategy/editpreview
+
+commerce.ff4j.url.base: https://togglz.dev.shutterfly.com
+
+hystrix.command.SyncCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.OrderCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 15000
+hystrix.command.PricedCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 15000
+hystrix.command.RenderersMophlyCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.ProfileMophlyCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.PricingCatalogCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.ProductCatalogCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.MediaServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.PaymentServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.PaymentTokenServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.PaymentAccessServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.command.ProjectServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.UserServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.PromoCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.OrderHistoryCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.UpdateCreditsCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.UpdatePromoCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.OrderCancelCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.ProductConfigHystrixCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.CategoryServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.ProductQtyLookupCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.PricingTiersLookupHystrixCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.ProductGiftLookupCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.RetailStoreGetChainsCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.RetailStoreGetStoreCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.RetailStoreGetStoresWithinDistanceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 15000
+hystrix.command.RetailStoreGetSupportedRetailProductsCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.RetailStoreGetProductsPriceLookupCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.UserServiceGetUserInfoCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.PriceLookupCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.PIPDataCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.Ff4jHystrixCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+hystrix.command.BatchAvailabilityCommandKey.execution.isolation.thread.timeoutInMilliseconds: 5000
+
+adobe.recommend.calculation.rate: 2.5
+adobe.recommend.calculation.enabled: true
+
+---
+spring:
+  profiles: default
+
+# For "/info" diagnostic endpoint
+info:
+  build:
+    groupId: ${project.groupId}
+    artifactId: ${project.artifactId}
+    description: ${project.description}
+    version: ${project.version}
+
+payment.merchant.id: 'shutterfly_dev'
+payment.store.id: 4
+
+services:
+
+  users:
+    addressverification.old: https://ws.dev.shutterfly.com/services/address-verification/verify?address1={address1}&address2={address2}&city={city}&state={state}&zipCode={zipCode}
+    addressverification: https://address-verify.dev.shutterfly.com/address/v1/addresses/verify?address1={address1}&address2={address2}&city={city}&state={state}&zipCode={zipCode}
+    getcontacts: https://addressbook.dev.shutterfly.com/{userId}/contacts?pageSize=2147483647
+    createcontact: https://addressbook.dev.shutterfly.com/{userId}/contacts?validate=none
+    getselfcontact: https://addressbook.dev.shutterfly.com/{userId}/contacts/self
+    setselfemail: https://addressbook.dev.shutterfly.com/{userId}/contacts/self?emailId={emailId}
+    specificcontact: https://addressbook.dev.shutterfly.com/{userId}/contacts/{contactId}?validate=none
+    getorder: https://orderapi/order/v1/stores/SFLY/orders/user/{userId}/order/{orderSerialNo}
+    getorders: https://orderapi/order/v1/stores/SFLY/orders/user/{userId}/order/list?max={max}&startNum={startNum}
+    getpromos: https://services-promotion.dev.shutterfly.com/promotions/users/{userId}/promotions
+    getuserinfo: https://user.dev.shutterfly.com/users/{uid}
+    getuserstat: https://user.dev.shutterfly.com/userstat/{uid}/userOrderStat
+    checkemail: https://user.dev.shutterfly.com/api/users/exists?emailAddress={email}
+    getiamconfig: https://user.dev.shutterfly.com/iamconfig/client/WEB
+
+  payments:
+    getpayment: https://user.dev.shutterfly.com/users/{userId}/paymentinfo
+    getpaymenttoken: /stores/{storeId}/payments/tokens
+    updatepaymenttoken: /stores/{storeId}/payments/tokens/{tokenId}
+    accesstoken: /member/{memberId}/gateway/{gateway}/accessToken
+    failoverAccessGuid: /stores/{storeId}/members/{memberId}/guid
+    vcdecryptdata: /stores/{storeId}/vc/data
+    deletepaymenttokens: /stores/{storeId}/payments/tokens/members/{memberId}
+    getsignature: https://services-payment.dev.shutterfly.com/stores/{storeId}/signs
+    afterpayConfig: https://services-payment.dev.shutterfly.com/stores/{storeId}/afterpay/config
+    afterpayCheckout: https://services-payment.dev.shutterfly.com/stores/{storeId}/afterpay/checkout
+
+  cart:
+    additem: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/items
+    deleteitem: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/items/{itemId}
+    createcart: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts
+    getcart: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}
+    getcartsummaries: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/cartSummaries
+    getpricedcart: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/priced
+    ordercart: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/checkout
+    updatecartqtys: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/quantities
+    recipients: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/recipients
+    updaterecipient: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/recipients/{recipientId}
+    orderpayload: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/orderpayload
+    updatecartcredit: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/credit
+    addcartpromo: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/promos/{promoId}
+    setcartpromo: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/promos
+    getcartpromo: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/promos
+    updateitemmetadata: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/items/{itemId}/metadata/{metadataKey}/{metadataValue}
+    deleteitemmetadata: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/items/{itemId}/metadata/{metadataKey}
+    updaterecipientmetadata: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/recipients/{recipientId}/metadata/{metadataKey}/{metadataValue}
+    deleterecipientmetadata: https://services-cart.dev.shutterfly.com/cart/v1/stores/{storeId}/users/{userId}/carts/{cartId}/recipients/{recipientId}/metadata/{metadataKey}
+
+  errors:
+    createEntry: https://services-errors.dev.shutterfly.com/errors/v1/users/{userId}
+
+  projects:
+    getproject: https://projects.dev.shutterfly.com/projects/v1/users/{userId}/projects/{projectGuid}
+    createproject: https://projects.dev.shutterfly.com/projects/v1/users/{userId}/projects
+
+  credits:
+    getcreditsbalance: https://services-credits.dev.shutterfly.com/credits/users/{userId}/balance
+    giftcard.redeem: https://services-credits.dev.shutterfly.com/giftcards/users/{userId}/redemption
+    giftcert.redeem: https://services-credits.dev.shutterfly.com/credits/users/{userId}/balance
+    giftcert.product: https://services-credits.dev.shutterfly.com/credits/giftcertificate/{sku}
+
+  shipping:
+    getestimate: https://services-shipping.dev.shutterfly.com/shipping/estimate?verbose=true
+    getcountries: https://services-shipping.dev.shutterfly.com/shipping/v1/countries?shippable=true
+
+  orderapi:
+    placeorder: https://orderapi/order/v1/stores/SFLY/orders
+    cancelorder: https://orderapi/order/v1/stores/SFLY/orders/user/{userId}/cancel/{orderSerialNo}
+    persistsmscontact: https://orderapi/order/v1/stores/SFLY/orders/notification/smscontact
+    updatesmscontact: https://orderapi.dev.shutterfly.com/order/v1/stores/SFLY/orders/notification/smscontact/{orderSerialNo}
+
+  ops:
+    createproductforproject: https://services-ops.dev.shutterfly.com/orderable/v4/users/{userId}/products/projects
+    createproductforsku: https://services-ops.dev.shutterfly.com/orderable/v4/users/{userId}/products/skus
+    createproductforgift: https://services-ops.dev.shutterfly.com/orderable/v4/users/{userId}/products/addons
+    prepaidbundles: https://services-ops.dev.shutterfly.com/orderable/v4/users/{userId}/products/prepaidbundles
+
+  promotions:
+    getpromoterms: https://services-promotion.dev.shutterfly.com/promotions/{promoId}/termsAndConditions
+    getfriendly: https://services-promotion.dev.shutterfly.com/promotions/friendlycode/{friendlyCodeName}
+    findpromos: https://services-promotion.dev.shutterfly.com/promotions/{promoId}
+    freeshipupsell: https://services-promotion.dev.shutterfly.com/promotions/freeshipupsell/getremainvalue
+
+  product:
+    getconfig: https://product.dev.shutterfly.com/product/v1/configs/{productConfigId}
+    getconfigs: https://product.dev.shutterfly.com/product/v1/configs
+    lookupqty: https://product.dev.shutterfly.com/lookupQty/productquantitytiers/sku/{sku}
+    lookupgifts: https://product.dev.shutterfly.com/product/v1/gifts/lookup
+    lookupqtybypci: https://product.dev.shutterfly.com/lookupQty/productquantitytiers/productconfiguration/{productConfigId}
+    metadata: https://services-product.dev.shutterfly.com/product/v1/products/{sku}/metadata
+
+  retailstore:
+    getchains: https://services-retail-store.dev.shutterfly.com/retail-store/v1/chains
+    getstore: https://services-retail-store.dev.shutterfly.com/retail-store/v1/store/{storeId}
+    getstoreswithindistance: https://services-retail-store.dev.shutterfly.com/retail-store/v1/store
+    getsupportedretailproducts: https://services-retail-store.dev.shutterfly.com/retail-store/v1/products/supported
+    getpricelookup: https://services-retail-store.dev.shutterfly.com/retail-store/v1/products/price/lookup
+    getpricelookupv2: https://services-retail-store.dev.shutterfly.com/retail-store/v2/products/price/lookup
+
+  price:
+    lookup: https://services-pricing.dev.shutterfly.com/price/v1/lookup/unit
+    quantity.tiers: https://services-pricing.dev.shutterfly.com/price_engine/quantity-price-tiers
+
+  pipdata:
+    getmetadata: https://pip-data.dev.shutterfly.com/pip-data/product/{productCode}
+
+  productCatalog:
+    getcategory: https://product-catalog.dev.shutterfly.com/product/catalog/v1/category/{categoryCode}
+    getmetadata: https://product-catalog.dev.shutterfly.com/product/catalog/v1/product/{productCode}
+    getattributesbyproductcode: https://product-catalog.dev.shutterfly.com/product/catalog/v1/product/{productCode}/attributes
+    getattributesbyproductcodeskucode: https://product-catalog.dev.shutterfly.com/product/catalog/v1/product/{productCode}/{skuCode}/attributes
+
+  availability:
+    getbatchavailability: https://services-availability.dev.shutterfly.com/availability/v1/batch
+
+  oms:
+    updateOrderBill: https://services-oms.dev.shutterfly.com/payments/users/{userId}/order/{orderSerialNo}/updateBilling
+
+  subscription:
+    getactiveplans: https://services-subscription.dev.shutterfly.com/plan/app/users/{userId}/search
+
+  payment.host: https://services-payment.dev.shutterfly.com
+  pol.host: https://pricing-orchestration.dev.shutterfly.com
+
+  site:
+    geteditandpreviewstrategy: https://site-services.dev.shutterfly.com/users/projects/strategy/editpreview
+
+commerce.ff4j.url.base: https://togglz.dev.shutterfly.com
+
+# for testing locally set this very high as you might be debugging
+#Address Book
+hystrix.command.AddressBookAddCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.AddressBookDeleteCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.AddressBookGetCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.AddressBookUpdateCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+#AVS
+hystrix.command.AddressVerifyCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+#Cart Service
+hystrix.command.CreateCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.DeleteCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.GetCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.GetCartSummariesServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.OrderCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.PricedCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.UpdateCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.UpdateCartQuantitiesServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.DeleteCartQuantitiesServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.AddCartRecipientServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.UpdateCartRecipientServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.GetCartCheckoutOrderPayloadCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.UpdateCreditsCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.UpdatePromoCartServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+#Payment Service
+hystrix.command.PaymentServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.PaymentTokenServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+#Project Service
+hystrix.command.ProjectServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+#Promotion
+hystrix.command.AddUserPromoCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.GetUserPromoAsynchCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.PromoGetCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.GetUserPromoIdsCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.GetUserPromoCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.GetUserPromoPrepaidCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.PromoGetTermsCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.PromoGetFriendlyCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+#OPS
+hystrix.command.OPSProductGuidCommandKey.execution.isolation.thread.timeoutInMilliseconds: 120000
+
+#Order Service
+hystrix.command.OrderGetCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.OrderHistoryCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.PostCybersourceErrorOrderCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.OrderCancelCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+#Credits Service
+hystrix.command.CreditsBalanceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+# Credits - Gift Card
+hystrix.command.CreditsGiftCardRedemptionCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+# Credits - Gift Cert
+hystrix.command.CreditsGiftCertRedemptionCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+hystrix.command.CreditsGiftCertProductCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+
+# Shipping
+hystrix.command.ShippingHystrixCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+# Product Configs
+hystrix.command.ProductConfigHystrixCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+# Category Service
+hystrix.command.CategoryServiceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+# Product Lookup Qty Service
+hystrix.command.ProductQtyLookupCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+# Pricing Lookup Qty Service
+hystrix.command.PricingTiersLookupHystrixCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+
+# Product Gift Lookup Service
+hystrix.command.ProductGiftLookupCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+# Retail Store Service
+hystrix.command.RetailStoreGetChainsCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+hystrix.command.RetailStoreGetStoreCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+hystrix.command.RetailStoreGetStoresWithinDistanceCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.RetailStoreGetSupportedRetailProductsCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+hystrix.command.RetailStoreGetProductsPriceLookupCommandKey.execution.isolation.thread.timeoutInMilliseconds: 2000
+
+# User Service
+hystrix.command.UserServiceGetUserInfoCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+
+# Pricing Service
+hystrix.command.PriceLookupCommandKey.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+# Pipdata Service
+hystrix.command.PIPDataCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+
+# Product Catalog Service
+hystrix.command.ProductCatalogCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+
+# Ff4j Service
+hystrix.command.Ff4jHystrixCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+
+# Availability Service
+hystrix.command.BatchAvailabilityCommandKey.execution.isolation.thread.timeoutInMilliseconds: 30000
+
+# adobe recommend calculation
+adobe.recommend.calculation.rate: 250
+adobe.recommend.calculation.enabled: true
+
+# Cart - limits
+sfly.cart.limits:
+  maxPromotions: 100
