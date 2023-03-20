@@ -16,7 +16,7 @@ public class ManagementController {
     @Autowired
     private Environment env;
 
-    private static final String REQUEST_URL = "http://localhost:8082/users-service/users/isWorking";
+    private static final String REQUEST_URL = "http://localhost:8082/users/isWorking";
 
     private final RestTemplate template = new RestTemplate();
 

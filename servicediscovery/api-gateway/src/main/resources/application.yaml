@@ -5,10 +5,29 @@ spring:
     name: api-gateway
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+      routes:
+        - id: users-status-check
+          uri: lb://users-service
+          predicates:
+            - Path=/users/isWorking
+            - Method=GET
+        - id: management-status-check
+          uri: lb://management-service
+          predicates:
+            - Path=/management/isWorking
+            - Method=GET
+        - id: management-status-check
+          uri: lb://management-service
+          predicates:
+            - Path=/management/isUsersWorking
+            - Method=GET
+#      discovery:
+#        locator:
+#          enabled: false
+#          lower-case-service-id: false
+
+
+
 eureka:
   client:
     service-url:
