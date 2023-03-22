@@ -21,10 +21,10 @@ spring:
           predicates:
             - Path=/management/isUsersWorking
             - Method=GET
-#      discovery:
-#        locator:
-#          enabled: false
-#          lower-case-service-id: false
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: false
 
 
 
