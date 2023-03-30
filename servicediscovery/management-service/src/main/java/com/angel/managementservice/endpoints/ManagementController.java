@@ -22,7 +22,7 @@ public class ManagementController {
 
     @GetMapping("/isWorking")
     public ResponseEntity<String> isManagementWorking() {
-        return ResponseEntity.ok("Instance of Users service is working on port - " + env.getProperty("local.server.port"));
+        return ResponseEntity.ok("Instance of Management service is working on port - " + env.getProperty("local.server.port"));
     }
 
     @GetMapping("/isUsersWorking")
