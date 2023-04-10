@@ -11,6 +11,7 @@ spring:
           predicates:
             - Path=/users/isWorking
             - Method=GET
+           #http://localhost:5678/users/isWorking
         - id: management-status-check
           uri: lb://management-service
           predicates:
