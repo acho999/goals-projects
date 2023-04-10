@@ -29,7 +29,7 @@ public class ManagementController {
     public ResponseEntity<String> isUsersServiceWorking() {
 
         ResponseEntity<String> response = template.exchange(REQUEST_URL, HttpMethod.GET, null, String.class);
-        String managementServicePort = "Instance of Management service is working on port - " + env.getProperty("local.server.port");
-        return ResponseEntity.ok(response.getBody() + " \\ " + " Instance of Management service is working on port - " + env.getProperty("local.server.port"));
+        String managementServicePort = " Instance of Management service is working on port - " + env.getProperty("local.server.port");
+        return ResponseEntity.ok(response.getBody() + " \\ " + managementServicePort);
     }
 }
